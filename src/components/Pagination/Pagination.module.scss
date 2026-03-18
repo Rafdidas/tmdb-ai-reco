@@ -1,0 +1,64 @@
+@use '../../styles/variables' as *;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pageList {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pageItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pageLink,
+.currentPage,
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #fff;
+  color: $color-text;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pageLink:hover,
+.navButton:hover {
+  border-color: $color-primary;
+  color: $color-primary;
+}
+
+.currentPage {
+  border-color: $color-primary;
+  background: $color-primary;
+  color: #fff;
+}
+
+.navButton[aria-disabled='true'] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.ellipsis {
+  color: #6b7280;
+  font-size: $font-size-sm;
+}

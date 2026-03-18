@@ -1,0 +1,192 @@
+@use '../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.selectedSection {
+  padding: $spacing-md;
+  border: 1px solid #e5e7eb;
+  border-radius: $radius-md;
+  background: #fafafa;
+}
+
+.selectedHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+}
+
+.selectedTitle {
+  margin: 0;
+  font-size: $font-size-xl;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.selectedCount {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: #6b7280;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: $font-size-md;
+  color: #6b7280;
+}
+
+.selectedList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.selectedItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #eef2ff;
+}
+
+.selectedName {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $color-primary;
+}
+
+.removeButton {
+  border: 0;
+  background: transparent;
+  color: #6b7280;
+  font-size: $font-size-sm;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: $spacing-md;
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+.analysisAction {
+  margin-top: 16px;
+}
+
+.analysisButton {
+  height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: $radius-sm;
+  background: $color-primary;
+  color: #fff;
+  font-size: $font-size-md;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.errorMessage {
+  margin: 16px 0 0;
+  font-size: $font-size-sm;
+  color: #dc2626;
+}
+
+.analysisResult {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: $radius-md;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+}
+
+.analysisTitle {
+  margin: 0 0 16px;
+  font-size: $font-size-xl;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.analysisBlock+.analysisBlock {
+  margin-top: 16px;
+}
+
+.analysisLabel {
+  margin: 0 0 8px;
+  font-size: $font-size-md;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.analysisText {
+  margin: 0;
+  font-size: $font-size-md;
+  line-height: 1.6;
+  color: $color-text;
+}
+
+.keywordList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.keywordItem {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  font-size: $font-size-sm;
+  color: $color-text;
+}
+
+.recommendationGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .recommendationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .recommendationGrid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}

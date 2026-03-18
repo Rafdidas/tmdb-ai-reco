@@ -1,0 +1,45 @@
+@use '../../styles/variables' as *;
+
+.form {
+  display: flex;
+  gap: $spacing-xs;
+  margin: 0 0 $spacing-md;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid #d1d5db;
+  border-radius: $radius-sm;
+  font-size: $font-size-md;
+  outline: none;
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+.button {
+  flex: 0 0 auto;
+  height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: $radius-sm;
+  background: $color-primary;
+  color: #fff;
+  font-size: $font-size-md;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .form {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,8 @@
+@use '../styles/reset';
+@use '../styles/variables' as *;
+
+body {
+  min-width: 320px;
+  color: $color-text;
+  background: linear-gradient(180deg, #f7f8fc 0%, $color-background 180px);
+}

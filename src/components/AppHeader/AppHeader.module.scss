@@ -1,0 +1,39 @@
+@use '../../styles/variables' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  min-height: 72px;
+  padding: 0 $spacing-lg;
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+.brandButton {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.title {
+  margin: 0;
+  font-size: $font-size-xl;
+  font-weight: 700;
+  color: $color-primary;
+}
+
+@media (max-width: 600px) {
+  .header {
+    min-height: 64px;
+    padding: 0 $spacing-sm;
+  }
+
+  .title {
+    font-size: $font-size-lg;
+  }
+}
