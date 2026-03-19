@@ -1,23 +1,199 @@
-@use '../styles/variables' as *;
-
 .page {
-  padding: $spacing-lg;
+  min-height: 100vh;
+  padding: 0 24px 0;
+  background:
+    radial-gradient(circle at top center, rgba(188, 157, 255, 0.1), transparent 30%),
+    linear-gradient(180deg, #131313 0%, #0e0e0e 220px);
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 8px 0;
+}
+
+.brand {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #bc9dff;
+  text-decoration: none;
+}
+
+.topBarControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.searchSlot {
+  width: min(100%, 320px);
+}
+
+.iconButton,
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+}
+
+.iconButton {
+  border: 1px solid rgba(72, 72, 71, 0.3);
+  background: rgba(32, 31, 31, 0.88);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #bc9dff;
+  box-shadow: 0 0 14px rgba(188, 157, 255, 0.55);
+}
+
+.avatar {
+  background: linear-gradient(135deg, #ffd6aa, #f6b28b);
+  color: #432818;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hero {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 0 40px;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00e3fd;
+}
+
+.title {
+  max-width: 780px;
+  margin: 0;
+  font-size: clamp(52px, 8vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.titleAccent {
+  display: block;
+  background: linear-gradient(90deg, #bc9dff 0%, #00e3fd 100%);
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .description {
-  margin: 0 0 24px;
-  font-size: $font-size-md;
-  color: $color-text;
+  max-width: 640px;
+  margin: 24px 0 0;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #adaaaa;
+}
+
+.emptyState {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 0 160px;
+}
+
+.emptyTitle {
+  margin: 0 0 12px;
+  font-size: 28px;
+  color: #ffffff;
 }
 
 .emptyMessage {
-  margin: 24px 0 0;
-  font-size: $font-size-md;
-  color: #6b7280;
+  margin: 0;
+  font-size: 16px;
+  color: #adaaaa;
 }
 
-@media (max-width: 600px) {
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 1280px;
+  margin: 96px auto 0;
+  padding: 48px 0;
+  border-top: 1px solid rgba(72, 72, 71, 0.15);
+}
+
+.footerBrand {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #bc9dff;
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  color: #adaaaa;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footerCopy {
+  margin: 0;
+  color: rgba(173, 170, 170, 0.75);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
   .page {
-    padding: $spacing-sm;
+    padding: 0 16px;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 20px;
+  }
+
+  .topBarControls {
+    justify-content: space-between;
+  }
+
+  .searchSlot {
+    width: 100%;
+    flex: 1;
+  }
+
+  .hero {
+    padding-top: 36px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .topBarControls {
+    gap: 10px;
+  }
+
+  .footerLinks {
+    gap: 12px;
   }
 }

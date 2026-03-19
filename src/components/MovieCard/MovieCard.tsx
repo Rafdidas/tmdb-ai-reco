@@ -12,11 +12,25 @@ type MovieCardProps = {
   onToggleSelect: (movie: Movie) => void;
 };
 
+function getMatchScore(movie: Movie) {
+  return Math.max(72, Math.min(99, Math.round(movie.vote_average * 10)));
+}
+
 export default function MovieCard({ movie, selected, onToggleSelect }: MovieCardProps) {
   const posterUrl = movie.poster_path ? getTmdbImageUrl(movie.poster_path, "w500") : null;
+  const matchScore = getMatchScore(movie);
 
   return (
-    <article className={styles.card}>
+    <article className={`${styles.card} ${selected ? styles.selected : ""}`}>
+      <button
+        type="button"
+        className={styles.selectButton}
+        onClick={() => onToggleSelect(movie)}
+        aria-label={selected ? `${movie.title} 선택 해제` : `${movie.title} 선택`}
+      >
+        {selected ? "✓" : "+"}
+      </button>
+
       <Link href={`/movie/${movie.id}`} className={styles.cardLink}>
         <div className={styles.posterWrap}>
           {posterUrl ? (
@@ -25,31 +39,22 @@ export default function MovieCard({ movie, selected, onToggleSelect }: MovieCard
               src={posterUrl}
               alt={movie.title}
               fill
-              sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 25vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1200px) 33vw, 25vw"
             />
           ) : (
             <div className={styles.emptyPoster}>이미지 없음</div>
           )}
         </div>
 
-        <div className={styles.cardBody}>
+        <div className={styles.overlay}>
+          {/* <div className={styles.matchBadge}>{selected ? "Selected" : `AI Match ${matchScore}%`}</div> */}
           <h2 className={styles.movieTitle}>{movie.title}</h2>
           <p className={styles.meta}>
-            평점 {movie.vote_average.toFixed(1)} · 개봉일 {movie.release_date || "미정"}
+            {movie.release_date?.slice(0, 4) || "TBD"} <span>✦</span> {movie.vote_average.toFixed(1)}
           </p>
-          <p className={styles.overview}>{movie.overview || "줄거리 없음"}</p>
+          <p className={styles.overview}>{movie.overview || "No synopsis available."}</p>
         </div>
       </Link>
-
-      <div className={styles.action}>
-        <button
-          type="button"
-          className={`${styles.selectButton} ${selected ? styles.selected : ""}`}
-          onClick={() => onToggleSelect(movie)}
-        >
-          {selected ? "선택됨" : "취향 담기"}
-        </button>
-      </div>
     </article>
   );
 }

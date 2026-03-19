@@ -1,8 +1,30 @@
 @use '../styles/reset';
 @use '../styles/variables' as *;
 
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: #0e0e0e;
+}
+
 body {
   min-width: 320px;
-  color: $color-text;
-  background: linear-gradient(180deg, #f7f8fc 0%, $color-background 180px);
+  color: #ffffff;
+  background:
+    radial-gradient(circle at top center, rgba(188, 157, 255, 0.12), transparent 24%),
+    linear-gradient(180deg, #141414 0%, #0e0e0e 140px);
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }

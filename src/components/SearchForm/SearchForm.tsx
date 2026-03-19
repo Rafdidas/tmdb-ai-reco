@@ -16,11 +16,14 @@ export default function SearchForm() {
 
     if (query) {
       params.set('query', query);
+      params.delete('page');
     } else {
       params.delete('query');
+      params.delete('page');
     }
 
-    router.push(`${pathname}?${params.toString()}`);
+    const queryString = params.toString();
+    router.push(queryString ? `${pathname}?${queryString}` : pathname);
   };
 
   return (
@@ -29,12 +32,13 @@ export default function SearchForm() {
         type="text"
         name="query"
         defaultValue={defaultValue}
-        placeholder="영화 제목을 검색해보세요"
+        placeholder="Search curated titles..."
         className={styles.input}
+        aria-label="Search curated titles"
       />
       <button type="submit" className={styles.button}>
-        검색
+        Search
       </button>
     </form>
   );
-} 
+}

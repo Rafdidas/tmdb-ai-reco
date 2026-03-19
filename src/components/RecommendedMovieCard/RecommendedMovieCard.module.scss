@@ -1,22 +1,22 @@
-@use '../../styles/variables' as *;
-
 .cardLink {
   display: block;
   color: inherit;
+  text-decoration: none;
 }
 
 .card {
+  position: relative;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
-  border-radius: $radius-md;
-  background: #fff;
+  min-height: 322px;
+  border-radius: 8px;
+  background: #1a1919;
 }
 
 .posterWrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 2 / 3;
-  background: #f3f4f6;
+  aspect-ratio: 0.82;
+  background: #141414;
 }
 
 .poster {
@@ -29,30 +29,59 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: #6b7280;
-  font-size: $font-size-sm;
+  color: #6f6a6a;
+  font-size: 13px;
 }
 
-.body {
-  padding: $spacing-sm;
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 30%, rgba(0, 0, 0, 0.92) 100%);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 2px;
+  background: rgba(0, 227, 253, 0.2);
+  color: #00e3fd;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.year {
+  color: #adaaaa;
+  font-size: 10px;
+  font-weight: 600;
 }
 
 .title {
-  margin: 0 0 8px;
-  font-size: $font-size-md;
-  font-weight: 700;
-  color: $color-text;
-}
-
-.meta {
-  margin: 0 0 8px;
-  font-size: $font-size-sm;
-  color: #6b7280;
+  margin: 0;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1.2;
 }
 
 .reason {
   margin: 0;
-  font-size: $font-size-sm;
-  line-height: 1.6;
-  color: $color-text;
+  color: #adaaaa;
+  font-size: 10px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

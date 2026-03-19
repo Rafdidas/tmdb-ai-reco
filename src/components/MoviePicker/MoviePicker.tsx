@@ -15,7 +15,32 @@ type MoviePickerProps = {
   query?: string;
 };
 
+type SpectrumItem = {
+  label: string;
+  value: number;
+  color: string;
+};
+
+const MIN_SELECTION = 3;
 const MAX_SELECTION = 5;
+const SPECTRUM_COLORS = ["#00e3fd", "#bc9dff", "#ff6d8b"];
+const SPECTRUM_VALUES = [88, 65, 42];
+
+function toSpectrum(analysis: TasteAnalysis | null): SpectrumItem[] {
+  if (!analysis) {
+    return [];
+  }
+
+  const labels = analysis.recommendedMoods.length
+    ? analysis.recommendedMoods.slice(0, 3)
+    : analysis.keywords.slice(0, 3);
+
+  return labels.map((label, index) => ({
+    label,
+    value: SPECTRUM_VALUES[index] ?? 50,
+    color: SPECTRUM_COLORS[index] ?? "#00e3fd",
+  }));
+}
 
 export default function MoviePicker({
   movies,
@@ -33,6 +58,9 @@ export default function MoviePicker({
     [selectedMovies],
   );
 
+  const spectrum = useMemo(() => toSpectrum(analysis), [analysis]);
+  const remainingSelections = Math.max(MIN_SELECTION - selectedMovies.length, 0);
+
   const handleToggleSelect = (movie: Movie) => {
     const isSelected = selectedIds.has(movie.id);
 
@@ -45,7 +73,7 @@ export default function MoviePicker({
     }
 
     if (selectedMovies.length >= MAX_SELECTION) {
-      alert("최대 5개까지 선택할 수 있습니다.");
+      alert(`최대 ${MAX_SELECTION}개까지 선택할 수 있습니다.`);
       return;
     }
 
@@ -53,8 +81,8 @@ export default function MoviePicker({
   };
 
   const handleAnalyzeTaste = async () => {
-    if (selectedMovies.length === 0) {
-      alert("먼저 영화를 1개 이상 선택해주세요.");
+    if (selectedMovies.length < MIN_SELECTION) {
+      alert(`먼저 영화를 최소 ${MIN_SELECTION}개 선택해주세요.`);
       return;
     }
 
@@ -112,97 +140,95 @@ export default function MoviePicker({
     };
   }, []);
 
-  return (
-    <div className={styles.wrapper}>
-      <section className={styles.selectedSection}>
-        <div className={styles.selectedHeader}>
-          <h2 className={styles.selectedTitle}>내 취향으로 담은 영화</h2>
-          <p className={styles.selectedCount}>
-            {selectedMovies.length} / {MAX_SELECTION}
-          </p>
-        </div>
+  if (analysis) {
+    return (
+      <div className={styles.wrapper}>
+        <section className={styles.resultsHeader}>
+          <div>
+            <p className={styles.resultsEyebrow}>Analysis Complete</p>
+            <h2 className={styles.resultsTitle}>AI Insight Results</h2>
+          </div>
+          <div className={styles.resultsActions}>
+            <button type="button" className={styles.secondaryButton} onClick={() => setAnalysis(null)}>
+              Edit Picks
+            </button>
+            <button type="button" className={styles.ghostButton} onClick={handleAnalyzeTaste} disabled={isLoading}>
+              {isLoading ? "Analyzing..." : "Analyze Again"}
+            </button>
+          </div>
+        </section>
 
-        {selectedMovies.length === 0 ? (
-          <p className={styles.emptyText}>마음에 드는 영화를 선택해보세요.</p>
-        ) : (
-          <>
-            <ul className={styles.selectedList}>
-              {selectedMovies.map((movie) => (
-                <li key={movie.id} className={styles.selectedItem}>
-                  <span className={styles.selectedName}>{movie.title}</span>
-                  <button
-                    type="button"
-                    className={styles.removeButton}
-                    onClick={() => handleToggleSelect(movie)}
-                  >
-                    삭제
-                  </button>
-                </li>
-              ))}
-            </ul>
-
-            <div className={styles.analysisAction}>
-              <button
-                type="button"
-                className={styles.analysisButton}
-                onClick={handleAnalyzeTaste}
-                disabled={isLoading}
-              >
-                {isLoading ? "분석 중..." : "AI 취향 분석"}
-              </button>
+        <section className={styles.analysisGrid}>
+          <article className={styles.summaryCard}>
+            <div className={styles.cardHeadingRow}>
+              <span className={styles.cardIcon}>•</span>
+              <h3 className={styles.cardTitle}>Deep Narrative Synthesis</h3>
             </div>
-          </>
-        )}
+            <p className={styles.summaryText}>{analysis.summary}</p>
+            <div className={styles.chipRow}>
+              {analysis.keywords.slice(0, 4).map((keyword) => (
+                <span key={keyword} className={styles.chip}>
+                  {keyword}
+                </span>
+              ))}
+              {analysis.recommendedMoods.slice(0, 2).map((mood) => (
+                <span key={mood} className={styles.chipMuted}>
+                  {mood}
+                </span>
+              ))}
+            </div>
+          </article>
+
+          <aside className={styles.spectrumCard}>
+            <h3 className={styles.cardTitle}>Mood Spectrum</h3>
+            <div className={styles.spectrumList}>
+              {spectrum.map((item) => (
+                <div key={item.label} className={styles.spectrumItem}>
+                  <div className={styles.spectrumMeta}>
+                    <span>{item.label}</span>
+                    <span style={{ color: item.color }}>{item.value}%</span>
+                  </div>
+                  <div className={styles.spectrumTrack}>
+                    <span
+                      className={styles.spectrumFill}
+                      style={{ width: `${item.value}%`, backgroundColor: item.color, boxShadow: `0 0 14px ${item.color}` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* <div className={styles.audioPanel}>
+              <span className={styles.audioLabel}>Recommended Output</span>
+              <strong className={styles.audioValue}>Spatial Audio Optimized</strong>
+            </div> */}
+          </aside>
+        </section>
 
         {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
 
-        {analysis ? (
-          <section className={styles.analysisResult}>
-            <h3 className={styles.analysisTitle}>AI 취향 분석 결과</h3>
+        <section className={styles.recommendSection}>
+          <div className={styles.recommendHeader}>
+            <h3 className={styles.recommendTitle}>Personalized Recommendations</h3>
+            <p className={styles.recommendMeta}>{selectedMovies.length} source titles selected</p>
+          </div>
 
-            <div className={styles.analysisBlock}>
-              <h4 className={styles.analysisLabel}>한 줄 요약</h4>
-              <p className={styles.analysisText}>{analysis.summary}</p>
+          {analysis.recommendedMovieResults.length === 0 ? (
+            <p className={styles.emptyMessage}>추천 영화를 찾지 못했습니다.</p>
+          ) : (
+            <div className={styles.recommendGrid}>
+              {analysis.recommendedMovieResults.map((movie) => (
+                <RecommendedMovieCard key={movie.id} movie={movie} />
+              ))}
             </div>
+          )}
+        </section>
+      </div>
+    );
+  }
 
-            <div className={styles.analysisBlock}>
-              <h4 className={styles.analysisLabel}>취향 키워드</h4>
-              <ul className={styles.keywordList}>
-                {analysis.keywords.map((keyword) => (
-                  <li key={keyword} className={styles.keywordItem}>
-                    {keyword}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className={styles.analysisBlock}>
-              <h4 className={styles.analysisLabel}>추천 분위기</h4>
-              <ul className={styles.keywordList}>
-                {analysis.recommendedMoods.map((mood) => (
-                  <li key={mood} className={styles.keywordItem}>
-                    {mood}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className={styles.analysisBlock}>
-              <h4 className={styles.analysisLabel}>이런 영화도 추천해요</h4>
-
-              {analysis.recommendedMovieResults.length === 0 ? (
-                <p className={styles.analysisText}>추천 영화를 찾지 못했습니다.</p>
-              ) : (
-                <div className={styles.recommendationGrid}>
-                  {analysis.recommendedMovieResults.map((movie) => (
-                    <RecommendedMovieCard key={movie.id} movie={movie} />
-                  ))}
-                </div>
-              )}
-            </div>
-          </section>
-        ) : null}
-      </section>
+  return (
+    <div className={styles.wrapper}>
+      {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
 
       <section className={styles.grid}>
         {movies.map((movie) => (
@@ -214,6 +240,21 @@ export default function MoviePicker({
           />
         ))}
       </section>
+
+      <div className={styles.selectionDock}>
+        <div className={styles.selectionStatus}>
+          <strong>{selectedMovies.length} titles selected</strong>
+          <span>{remainingSelections > 0 ? `Select ${remainingSelections} more` : "Ready to analyze"}</span>
+        </div>
+        <button
+          type="button"
+          className={styles.primaryButton}
+          onClick={handleAnalyzeTaste}
+          disabled={isLoading || selectedMovies.length < MIN_SELECTION}
+        >
+          {isLoading ? "Analyzing..." : "Analyze My Taste"}
+        </button>
+      </div>
 
       <Pagination currentPage={currentPage} totalPages={totalPages} query={query} />
     </div>

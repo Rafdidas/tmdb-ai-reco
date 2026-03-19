@@ -31,5 +31,6 @@ export async function searchMovieOne(query: string) {
 export async function getMovieDetail(movieId: number) {
   return tmdbFetch<MovieDetail>(`/movie/${movieId}`, {
     language: 'ko-KR',
+    append_to_response: 'credits,keywords,videos,release_dates,watch/providers,recommendations,similar',
   });
 }

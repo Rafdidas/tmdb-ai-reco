@@ -63,3 +63,16 @@ src/
   lib/
   styles/
   types/
+```
+
+---
+
+## 4. 환경 변수 설정
+
+민감한 키 값은 모두 `.env.local`에 관리했습니다.
+
+```bash
+TMDB_BEARER_TOKEN=YOUR_TMDB_BEARER_TOKEN
+TMDB_BASE_URL=https://api.themoviedb.org/3
+OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+```
