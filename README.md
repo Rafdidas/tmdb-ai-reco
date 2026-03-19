@@ -4,6 +4,10 @@ TMDB API와 OpenAI API를 활용해
 사용자가 좋아하는 영화를 선택하면 영화 취향을 분석하고,  
 비슷한 분위기의 영화를 추천해주는 React + Next.js 기반 프로젝트입니다.
 
+## 🔗 배포 링크
+
+👉 <a href="https://tmdb-ai-reco.vercel.app/" target="_blank">AI 영화 추천 서비스 바로가기</a>
+
 ---
 
 ## 1. 프로젝트 개요
