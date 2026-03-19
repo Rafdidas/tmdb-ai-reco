@@ -1,4 +1,4 @@
-export type TmdbImageSize = 'w500' | 'w780' | 'w1280' | 'original';
+export type TmdbImageSize = 'w185' | 'w500' | 'w780' | 'w1280' | 'original';
 
 export function getTmdbImageUrl(
   path: string,
