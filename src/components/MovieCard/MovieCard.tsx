@@ -12,13 +12,8 @@ type MovieCardProps = {
   onToggleSelect: (movie: Movie) => void;
 };
 
-function getMatchScore(movie: Movie) {
-  return Math.max(72, Math.min(99, Math.round(movie.vote_average * 10)));
-}
-
 export default function MovieCard({ movie, selected, onToggleSelect }: MovieCardProps) {
   const posterUrl = movie.poster_path ? getTmdbImageUrl(movie.poster_path, "w500") : null;
-  const matchScore = getMatchScore(movie);
 
   return (
     <article className={`${styles.card} ${selected ? styles.selected : ""}`}>
@@ -47,7 +42,6 @@ export default function MovieCard({ movie, selected, onToggleSelect }: MovieCard
         </div>
 
         <div className={styles.overlay}>
-          {/* <div className={styles.matchBadge}>{selected ? "Selected" : `AI Match ${matchScore}%`}</div> */}
           <h2 className={styles.movieTitle}>{movie.title}</h2>
           <p className={styles.meta}>
             {movie.release_date?.slice(0, 4) || "TBD"} <span>✦</span> {movie.vote_average.toFixed(1)}

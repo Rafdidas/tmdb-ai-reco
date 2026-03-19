@@ -12,17 +12,17 @@ type MovieDetailPageProps = {
 };
 
 function formatYear(value: string) {
-  return value ? value.slice(0, 4) : "TBD";
+  return value ? value.slice(0, 4) : "미정";
 }
 
 function formatRuntime(value: number | null) {
   if (!value) {
-    return "Runtime N/A";
+    return "상영 시간 정보 없음";
   }
 
   const hours = Math.floor(value / 60);
   const minutes = value % 60;
-  return `${hours}h ${minutes}m`;
+  return `${hours}시간 ${minutes}분`;
 }
 
 function getPrimaryCrew(movie: Awaited<ReturnType<typeof getMovieDetail>>, jobs: string[]) {
@@ -32,10 +32,10 @@ function getPrimaryCrew(movie: Awaited<ReturnType<typeof getMovieDetail>>, jobs:
 function buildAiInsight(movie: Awaited<ReturnType<typeof getMovieDetail>>) {
   const genres = movie.genres.slice(0, 2).map((genre) => genre.name);
   const keywords = movie.keywords.keywords.slice(0, 2).map((keyword) => keyword.name);
-  const genreText = genres.length ? genres.join(" and ") : movie.original_title;
-  const keywordText = keywords.length ? keywords.join(" and ") : "emotional scale and visual ambition";
+  const genreText = genres.length ? genres.join("와 ") : movie.original_title;
+  const keywordText = keywords.length ? keywords.join("와 ") : "감정의 밀도와 시각적 스케일";
 
-  return `Based on your preference for ${genreText}, this film stands out for its ${keywordText} and its ability to balance emotional intimacy with cosmic scale.`;
+  return `${genreText} 취향을 좋아한다면, 이 작품은 ${keywordText}를 중심으로 감정적인 밀도와 거대한 스케일을 동시에 경험하게 해주는 작품입니다.`;
 }
 
 export default async function MovieDetailPage({ params }: MovieDetailPageProps) {
@@ -66,20 +66,6 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
 
   return (
     <main className={styles.page}>
-      <header className={styles.topBar}>
-        <Link href="/" className={styles.brand}>
-          Digital Curator
-        </Link>
-        <div className={styles.topActions}>
-          <div className={styles.iconButton} aria-hidden="true">
-            <span className={styles.dot} />
-          </div>
-          <div className={styles.avatar} aria-hidden="true">
-            DC
-          </div>
-        </div>
-      </header>
-
       <section className={styles.hero}>
         {backdropUrl ? (
           <Image
@@ -96,9 +82,8 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
         <div className={styles.heroContent}>
           <div className={styles.heroTopRow}>
             <Link href="/" className={styles.backLink}>
-              Back to Recommendations
+              추천 화면으로 돌아가기
             </Link>
-            {/* <span className={styles.matchBadge}>AI Match {Math.round(movie.vote_average * 10)}%</span> */}
           </div>
 
           <h1 className={styles.title}>
@@ -127,12 +112,12 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
                 rel="noreferrer"
                 className={styles.primaryButton}
               >
-                Watch Trailer
+                예고편 보기
               </a>
             ) : null}
             {movie.homepage ? (
               <a href={movie.homepage} target="_blank" rel="noreferrer" className={styles.secondaryButton}>
-                Official Site
+                공식 사이트
               </a>
             ) : null}
           </div>
@@ -148,15 +133,15 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
 
           <div className={styles.factGrid}>
             <article className={styles.factCard}>
-              <span className={styles.factLabel}>Director</span>
+              <span className={styles.factLabel}>감독</span>
               <strong className={styles.factValue}>{getPrimaryCrew(movie, ["Director"])}</strong>
             </article>
             <article className={styles.factCard}>
-              <span className={styles.factLabel}>Writer</span>
+              <span className={styles.factLabel}>각본</span>
               <strong className={styles.factValue}>{getPrimaryCrew(movie, ["Writer", "Screenplay"])} </strong>
             </article>
             <article className={styles.factCard}>
-              <span className={styles.factLabel}>Studio</span>
+              <span className={styles.factLabel}>제작사</span>
               <strong className={styles.factValue}>{movie.production_companies[0]?.name ?? "정보 없음"}</strong>
             </article>
           </div>
@@ -164,7 +149,7 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
 
         <aside className={styles.sidebar}>
           <article className={styles.sidebarCard}>
-            <h2 className={styles.sidebarTitle}>Cast Highlights</h2>
+            <h2 className={styles.sidebarTitle}>주요 출연진</h2>
             <div className={styles.castList}>
               {castHighlights.map((person) => {
                 const profileUrl = person.profile_path ? getTmdbImageUrl(person.profile_path, "w185") : null;
@@ -179,7 +164,7 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
                     </div>
                     <div>
                       <strong className={styles.castName}>{person.name}</strong>
-                      <span className={styles.castRole}>{person.character || "Cast"}</span>
+                      <span className={styles.castRole}>{person.character || "배역 정보 없음"}</span>
                     </div>
                   </div>
                 );
@@ -188,7 +173,7 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
           </article>
 
           <article className={styles.insightCard}>
-            <p className={styles.insightEyebrow}>AI Insight</p>
+            <p className={styles.insightEyebrow}>AI 인사이트</p>
             <p className={styles.insightText}>{buildAiInsight(movie)}</p>
           </article>
         </aside>
@@ -196,7 +181,7 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
 
       {similarExperiences.length ? (
         <section className={styles.relatedSection}>
-          <p className={styles.sectionEyebrow}>Similar Experiences</p>
+          <p className={styles.sectionEyebrow}>비슷한 감상의 작품</p>
           <div className={styles.relatedGrid}>
             {similarExperiences.map((item) => {
               const posterUrl = item.poster_path ? getTmdbImageUrl(item.poster_path, "w500") : null;
@@ -210,7 +195,6 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
                     )}
                     <div className={styles.relatedOverlay}>
                       <strong className={styles.relatedTitle}>{item.title}</strong>
-                      {/* <span className={styles.relatedMatch}>{Math.round(item.vote_average * 10)}% AI Match</span> */}
                     </div>
                   </div>
                 </Link>
@@ -219,17 +203,6 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
           </div>
         </section>
       ) : null}
-
-      <footer className={styles.footer}>
-        <p className={styles.footerBrand}>Digital Curator</p>
-        <div className={styles.footerLinks}>
-          <span>Privacy Policy</span>
-          <span>Terms of Service</span>
-          <span>API Status</span>
-          <span>Contact</span>
-        </div>
-        <p className={styles.footerCopy}>© 2024 Digital Curator. Powered by TMDB & OpenAI.</p>
-      </footer>
     </main>
   );
 }

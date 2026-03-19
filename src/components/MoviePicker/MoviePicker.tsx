@@ -145,15 +145,15 @@ export default function MoviePicker({
       <div className={styles.wrapper}>
         <section className={styles.resultsHeader}>
           <div>
-            <p className={styles.resultsEyebrow}>Analysis Complete</p>
-            <h2 className={styles.resultsTitle}>AI Insight Results</h2>
+            <p className={styles.resultsEyebrow}>분석 완료</p>
+            <h2 className={styles.resultsTitle}>AI 취향 분석 결과</h2>
           </div>
           <div className={styles.resultsActions}>
             <button type="button" className={styles.secondaryButton} onClick={() => setAnalysis(null)}>
-              Edit Picks
+              선택 다시 하기
             </button>
             <button type="button" className={styles.ghostButton} onClick={handleAnalyzeTaste} disabled={isLoading}>
-              {isLoading ? "Analyzing..." : "Analyze Again"}
+              {isLoading ? "분석 중..." : "다시 분석하기"}
             </button>
           </div>
         </section>
@@ -162,7 +162,7 @@ export default function MoviePicker({
           <article className={styles.summaryCard}>
             <div className={styles.cardHeadingRow}>
               <span className={styles.cardIcon}>•</span>
-              <h3 className={styles.cardTitle}>Deep Narrative Synthesis</h3>
+              <h3 className={styles.cardTitle}>취향 서사 요약</h3>
             </div>
             <p className={styles.summaryText}>{analysis.summary}</p>
             <div className={styles.chipRow}>
@@ -180,7 +180,7 @@ export default function MoviePicker({
           </article>
 
           <aside className={styles.spectrumCard}>
-            <h3 className={styles.cardTitle}>Mood Spectrum</h3>
+            <h3 className={styles.cardTitle}>감정 스펙트럼</h3>
             <div className={styles.spectrumList}>
               {spectrum.map((item) => (
                 <div key={item.label} className={styles.spectrumItem}>
@@ -197,10 +197,6 @@ export default function MoviePicker({
                 </div>
               ))}
             </div>
-            {/* <div className={styles.audioPanel}>
-              <span className={styles.audioLabel}>Recommended Output</span>
-              <strong className={styles.audioValue}>Spatial Audio Optimized</strong>
-            </div> */}
           </aside>
         </section>
 
@@ -208,8 +204,8 @@ export default function MoviePicker({
 
         <section className={styles.recommendSection}>
           <div className={styles.recommendHeader}>
-            <h3 className={styles.recommendTitle}>Personalized Recommendations</h3>
-            <p className={styles.recommendMeta}>{selectedMovies.length} source titles selected</p>
+            <h3 className={styles.recommendTitle}>맞춤 추천 작품</h3>
+            <p className={styles.recommendMeta}>{selectedMovies.length}개 작품을 기준으로 분석됨</p>
           </div>
 
           {analysis.recommendedMovieResults.length === 0 ? (
@@ -243,8 +239,8 @@ export default function MoviePicker({
 
       <div className={styles.selectionDock}>
         <div className={styles.selectionStatus}>
-          <strong>{selectedMovies.length} titles selected</strong>
-          <span>{remainingSelections > 0 ? `Select ${remainingSelections} more` : "Ready to analyze"}</span>
+          <strong>{selectedMovies.length}개 작품 선택됨</strong>
+          <span>{remainingSelections > 0 ? `${remainingSelections}개 더 선택해 주세요` : "분석할 준비가 되었어요"}</span>
         </div>
         <button
           type="button"
@@ -252,7 +248,7 @@ export default function MoviePicker({
           onClick={handleAnalyzeTaste}
           disabled={isLoading || selectedMovies.length < MIN_SELECTION}
         >
-          {isLoading ? "Analyzing..." : "Analyze My Taste"}
+          {isLoading ? "분석 중..." : "내 취향 분석하기"}
         </button>
       </div>
 

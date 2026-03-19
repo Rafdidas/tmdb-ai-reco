@@ -13,9 +13,11 @@ export default function AppHeader() {
 
   return (
     <header className={styles.header}>
-      <button type="button" className={styles.brandButton} onClick={handleResetHome}>
-        <h1 className={styles.title}>TMDB AI RECO</h1>
-      </button>
+      <div className={styles.inner}>
+        <button type="button" className={styles.brandButton} onClick={handleResetHome}>
+          <span className={styles.title}>TMDB AI RECO</span>
+        </button>
+      </div>
     </header>
   );
 }

@@ -32,12 +32,12 @@ export default function SearchForm() {
         type="text"
         name="query"
         defaultValue={defaultValue}
-        placeholder="Search curated titles..."
+        placeholder="큐레이션할 작품을 검색해 보세요"
         className={styles.input}
-        aria-label="Search curated titles"
+        aria-label="영화 검색"
       />
       <button type="submit" className={styles.button}>
-        Search
+        검색
       </button>
     </form>
   );

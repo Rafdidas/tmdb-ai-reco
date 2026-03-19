@@ -35,8 +35,8 @@ export default function RecommendedMovieCard({ movie }: RecommendedMovieCardProp
 
         <div className={styles.overlay}>
           <div className={styles.topRow}>
-            <span className={styles.badge}>{matchScore}% Match</span>
-            <span className={styles.year}>{movie.release_date?.slice(0, 4) || "TBD"}</span>
+            <span className={styles.badge}>{matchScore}% 일치</span>
+            <span className={styles.year}>{movie.release_date?.slice(0, 4) || "미정"}</span>
           </div>
           <h3 className={styles.title}>{movie.title}</h3>
           <p className={styles.reason}>{movie.reason}</p>
